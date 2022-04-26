@@ -15,7 +15,6 @@ public class Prob05 {
 			// 정답 램덤하게 만들기
 			Random random = new Random();
 			int correctNumber = random.nextInt(100) + 1;
-			System.out.println(correctNumber);
 			System.out.println("수를 결정하였습니다. 맞추어 보세요");
 			int count = 1;
 			int low = 1;
@@ -41,12 +40,10 @@ public class Prob05 {
 			// 새 게임 여부 확인하기
 			System.out.print("다시 하겠습니까(y/n)>>");
 			String answer = scanner.next();
-			if ("y".equals(answer) == false) {
+			if ("y".equals(answer.toLowerCase()) == false) { // toLowerCase() => 대문자이면 소문자로 변경
 				break;
 			}
 		}
-
 		scanner.close();
 	}
-
 }

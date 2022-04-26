@@ -12,14 +12,14 @@ public class Prob04 {
 
 	public static char[] reverse(String str) {
 		/* 코드를 완성합니다 */
-		char a[] = str.toCharArray();
+		char result[] = str.toCharArray();
 		for (int i = 0; i < str.length(); i++) {
 			int reverse = str.length() - i;
-			a[i] = str.toCharArray()[reverse - 1];
+			result[i] = str.toCharArray()[reverse - 1]; // toCharArray() => 문자열을 char배열로 변경
 		}
-		return a;
+		return result;
 	}
-	
+
 	public static void printCharArray(char[] array) {
 		/* 코드를 완성합니다 */
 		System.out.println(array);

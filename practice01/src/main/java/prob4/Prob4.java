@@ -12,7 +12,7 @@ public class Prob4 {
 
 		for (int i = 1; i <= text.length(); i++) {
 			for (int j = 0; j < i; j++) {
-				System.out.print(text.toCharArray()[j]);
+				System.out.print(text.toCharArray()[j]); // charAt() => 문자열을 char배열로 변경
 			}
 			System.out.println();
 		}

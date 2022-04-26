@@ -4,21 +4,25 @@ public class Prob5 {
 
 	public static void main(String[] args) {
 		for (int i = 1; i < 100; i++) {
-			int ten_num = i / 10;
-			int num = i % 10;
+			String str = String.valueOf(i); // valueOf() => 숫자를 문자열로 변경
+			int clap = 0;
 
-			if (num % 3 == 0 && num != 0) {
-				System.out.print(i + " 짝");
-				if (ten_num % 3 == 0 && ten_num != 0) {
-					System.out.println("짝");
-				} else {
-					System.out.println();
-				}
-			} else {
-				if (ten_num % 3 == 0 && ten_num != 0) {
-					System.out.println(i + " 짝");
+			for (int j = 0; j < str.length(); j++) {
+				char c = str.charAt(j); // charAt() => 문자열을 char배열로 변경
+				if (c == '3' || c == '6' || c == '9') {
+					clap++;
 				}
 			}
+
+			if (clap == 0) {
+				continue;
+			}
+
+			System.out.print(str + " ");
+			for (int j = 0; j < clap; j++) {
+				System.out.print("짝");
+			}
+			System.out.println();
 		}
 	}
 }

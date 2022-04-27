@@ -16,7 +16,7 @@ public class GoodsApp {
 		Goods goods2 = new Goods();
 		System.out.println("Goods Count : " + Goods.countOfGoods);
 
-		// discount price 구하기
+		// discount price 구하기 
 		camera.setPrice(2000);
 		int discountPrice = camera.calcDiscountPrice(0.5);
 		System.out.println("Goods Discount Price: " + discountPrice);

@@ -13,7 +13,7 @@ public class GoodsApp {
 		camera.showInfo();
 
 		Goods goods1 = new Goods();
-		Goods goods2 = new Goods();
+		Goods goods2 = new Goods("tv", 10000, 10, 10);
 		System.out.println("Goods Count : " + Goods.countOfGoods);
 
 		// discount price 구하기 

@@ -8,8 +8,21 @@ public class Goods {
 	private int countStock;
 	private int countSold;
 
-	public Goods() { // 기본생성자, 없으면 컴파일러가 자동으로 생성
+	public Goods(String name) {
+		this.name = name;
+	}
+
+	public Goods() {
+
+	}
+
+	public Goods(String name, int price, int countStock, int countSold) { // 기본생성자, 없으면 컴파일러가 자동으로 생성
 		Goods.countOfGoods = Goods.countOfGoods + 1;
+
+		this.name = name;
+		this.price = price;
+		this.countStock = countStock;
+		this.countSold = countSold;
 	}
 
 	// 인스턴스 변수에 접근할때 getter/setter사용

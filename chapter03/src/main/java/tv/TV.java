@@ -32,21 +32,28 @@ public class TV {
 	}
 
 	public void channel(int channel) {
-		if (channel < 1) {
+		if(!power) {
+			return;
+		}
+		
+		if (channel < 0) {
 			this.channel = 255;
 		} else if (channel > 255) {
-			this.channel = 1;
+			this.channel = 0;
 		} else {
 			this.channel = channel;
 		}
 	}
 
 	public void channel(boolean up) {
-		channel = up ? channel + 1 : channel - 1;
-		channel(channel);
+		channel(channel + (up ? 1 : -1));
 	}
 
 	public void volume(int volume) {
+		if(!power) {
+			return;
+		}
+		
 		if (volume < 0) {
 			this.volume = 100;
 		} else if (volume > 100) {
@@ -57,7 +64,6 @@ public class TV {
 	}
 
 	public void volume(boolean up) {
-		volume = up ? volume + 1 : volume - 1;
-		volume(volume);
+		volume(volume + (up ? 1 : -1));
 	}
 }

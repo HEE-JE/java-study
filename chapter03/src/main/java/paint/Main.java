@@ -26,9 +26,21 @@ public class Main {
 
 		Circle circle = new Circle();
 		draw(circle);
-		
+
 		GraphicText graphicText = new GraphicText("Hello World");
 		draw(graphicText);
+
+		// instanceof 연산자 테스트
+		System.out.println(circle instanceof Object);
+		System.out.println(circle instanceof Shape);
+		System.out.println(circle instanceof Circle);
+
+		// 오류: class는 Hierachy상위와 하위만 instanceof 연산자를 사용할 수 있다.
+		// System.out.println(circle instanceof Rectangle);
+
+		// interface는 hierachy와 상관없이 instanceof 연산자를 사용할 수 있다.
+		System.out.println(circle instanceof Drawable);
+		System.out.println(circle instanceof Runnable);
 	}
 
 	public static void draw(Drawable drawable) {

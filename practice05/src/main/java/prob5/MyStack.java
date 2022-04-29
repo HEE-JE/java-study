@@ -8,22 +8,16 @@ public class MyStack {
 		stack = new String[num];
 	}
 
-	public int size() {
-		return top + 1;
-	}
-
-	public void resize(int num) {
-		String[] temp = new String[num];
-		for (int i = 0; i < stack.length; i++) {
-			temp[i] = stack[i];
+	public void resize() {
+		if (top + 1 == stack.length) {
+			String[] newStack = new String[stack.length * 2];
+			System.arraycopy(stack, 0, newStack, 0, top);
+			stack = newStack;
 		}
-		stack = temp;
 	}
-
+	
 	public void push(String str) {
-		if (size() == stack.length) {
-			resize(stack.length + 1);
-		}
+		resize();
 		stack[++top] = str;
 	}
 

@@ -24,12 +24,8 @@ public class MainApp {
 			System.out.println(stack.pop());
 			System.out.println(stack.pop());
 			
-		} catch (ArrayIndexOutOfBoundsException ex) {
+		} catch (MyStackException ex) {
 			System.out.println(ex);
-			// getMessage(, getLocalizedMessage  Index -1 out of bounds for length 3
-			// getClass() class java.lang.ArrayIndexOutOfBoundsException
 		}
-
 	}
-
 }

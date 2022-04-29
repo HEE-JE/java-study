@@ -1,29 +1,11 @@
 package prob5;
 
-public class MyStackException extends RuntimeException {
-	private String message;
-	
-	MyStackException() {
-//		super();
-//		System.out.println("aa");
+public class MyStackException extends Exception {
+	public MyStackException() {
+		super("stack is empty");
 	}
-	
-	MyStackException(String err) {
-//		super(err);
-//		System.out.println(err);
+
+	public MyStackException(String message) {
+		super(message);
 	}
-	
-	public String getMessage() {
-		message = "stack is empty";
-		return "stack is empty";
-	}
-	
-	public String getLocalizedMessage() {
-		message = "stack is empty";
-		return "stack is empty";
-	}
-	
-//	public Class<?> getClass() {
-//		return Prob5.MyStackException;
-//	}
 }

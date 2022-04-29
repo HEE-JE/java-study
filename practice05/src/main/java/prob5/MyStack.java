@@ -27,14 +27,15 @@ public class MyStack {
 		stack[++top] = str;
 	}
 
-	public String pop() {
-//		if(isEmpty()) {
-//			System.out.println("Prob5.MyStackException: stack is empty");
-//		}
+	public String pop() throws MyStackException {
+		if(top == -1) {
+			throw new MyStackException();
+		}
 		String str = stack[top];
 		stack[top] = null;
 		top--;
 		return str;
+
 	}
 
 	public boolean isEmpty() {

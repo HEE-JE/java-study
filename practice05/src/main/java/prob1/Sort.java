@@ -23,7 +23,6 @@ public class Sort {
 				}
 			}
 		}
-
 		// 결과 출력
 		System.out.println("\nAfter Sort.");
 

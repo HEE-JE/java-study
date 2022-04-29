@@ -12,6 +12,7 @@ public class ObjectTest02 {
 		System.out.println(p2 == p3);
 
 		// equals메소드 : 두 객체의 동질성(내용비교)
+		// 부모 클래스 Object 기본구현은 동일성(==)비교와 같다.
 		System.out.println(p1.equals(p2));
 		System.out.println(p2.equals(p3));
 	}

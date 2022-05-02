@@ -5,8 +5,6 @@ public class Depart extends Employee {
 
 	public Depart(String name, int salary, String department) {
 		super(name, salary);
-//		setName(name);
-//		setSalary(salary);
 		this.department = department;
 	}
 
@@ -18,8 +16,10 @@ public class Depart extends Employee {
 		return department;
 	}
 	
+	@Override
 	public void getInformation() {
-		super.getInformation();
-		System.out.println(" 부서: " + department);
+//		super.getInformation();
+//		System.out.println(" 부서: " + department);
+		System.out.println("이름:" + getName() + " 연봉:" + getSalary() + " 부서:" + department);
 	}
 }

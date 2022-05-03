@@ -1,10 +1,10 @@
 package prob5;
 
-public class MainApp {
+public class MainApp3 {
 
 	public static void main(String[] args) {
 		try {
-			MyStack stack = new MyStack(3);
+			MyStack3<String> stack = new MyStack3<>(3);
 			stack.push("Hello");
 			stack.push("World");
 			stack.push("!!!");
@@ -18,7 +18,7 @@ public class MainApp {
 
 			System.out.println("======================================");
 
-			stack = new MyStack(3);
+			stack = new MyStack3<>(3);
 			stack.push("Hello");
 
 			System.out.println(stack.pop());

@@ -1,31 +1,32 @@
 package prob5;
 
-public class MyStack {
+@SuppressWarnings("unchecked")
+public class MyStack3<T> {
 	private int top = -1;
-	private String[] stack;
+	private T[] stack;
 
-	public MyStack(int num) {
-		stack = new String[num];
+	public MyStack3(int num) {
+		stack = (T[]) new Object[num];
 	}
 
 	public void resize() {
-		String[] newStack = new String[stack.length * 2];
+		T[] newStack = (T[]) new Object[stack.length * 2];
 		System.arraycopy(stack, 0, newStack, 0, top);
 		stack = newStack;
 	}
 
-	public void push(String str) {
+	public void push(T str) {
 		if (top + 1 == stack.length) {
 			resize();
 		}
 		stack[++top] = str;
 	}
 
-	public String pop() throws MyStackException {
+	public T pop() throws MyStackException {
 		if (isEmpty()) {
 			throw new MyStackException("stack is empty");
 		}
-		String str = stack[top];
+		T str = stack[top];
 		stack[top--] = null;
 		return str;
 	}

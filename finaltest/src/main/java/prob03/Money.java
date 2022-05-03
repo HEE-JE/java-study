@@ -1,5 +1,7 @@
 package prob03;
 
+import java.util.Objects;
+
 public class Money {
 	private int amount;
 
@@ -8,27 +10,32 @@ public class Money {
 		this.amount = amount;
 	}
 
+	public int getAmount() {
+		return amount;
+	}
+
+	/* 코드 작성 */
 	public Money add(Money money) {
-		this.amount += money.amount;
-		Money addMoney = new Money(this.amount);
+		int result = this.amount + money.getAmount();
+		Money addMoney = new Money(result);
 		return addMoney;
 	}
 
 	public Money minus(Money money) {
-		this.amount -= money.amount;
-		Money minusMoney = new Money(this.amount);
+		int result = this.amount - money.getAmount();
+		Money minusMoney = new Money(result);
 		return minusMoney;
 	}
 
 	public Money multiply(Money money) {
-		this.amount *= money.amount;
-		Money multiplyMoney = new Money(this.amount);
+		int result = this.amount * money.getAmount();
+		Money multiplyMoney = new Money(result);
 		return multiplyMoney;
 	}
 
 	public Money devide(Money money) {
-		this.amount /= money.amount;
-		Money devideMoney = new Money(this.amount);
+		int result = this.amount / money.getAmount();
+		Money devideMoney = new Money(result);
 		return devideMoney;
 	}
 

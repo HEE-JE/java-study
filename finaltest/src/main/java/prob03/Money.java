@@ -41,7 +41,7 @@ public class Money {
 
 	public boolean equals(Money money) {
 		// = money instanceof Money
-		if (money.getClass() == getClass() && this.amount == money.amount) {
+		if (money.getClass() == getClass() && this.amount == money.getAmount()) {
 			return true;
 		} else {
 			return false;

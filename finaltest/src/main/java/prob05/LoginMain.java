@@ -45,6 +45,7 @@ public class LoginMain {
 			if (joinUsersId.equals(user.getId())) {
 				checkIndex = i;
 				check = true;
+				break;
 			}
 		}
 		if (!check) {

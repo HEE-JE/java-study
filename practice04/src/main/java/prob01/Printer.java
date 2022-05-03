@@ -16,22 +16,24 @@ public class Printer {
 //	public void println(String str) {
 //		System.out.println(str);
 //	}
-//
-//	public <T> void println(T t) {
-//		System.out.println(t);
-//	}
 
-	public int sum(Integer... nums) {
+	// Generic 메소드로 해결
+	public <T> void println(T t) {
+		System.out.println(t);
+	}
+
+	public int sum(int... nums) { // nums는 배열을 의미
 		int sum = 0;
-		for (Integer i : nums) {
+		for (int i : nums) {
 			sum += i;
 		}
 		return sum;
 	}
 
-	public <T> void println(T... ts) {
-		for (T t : ts) {
-			System.out.println(t);
+	public <T> void printlnGeneric(T... print) { // nums는 배열을 의미
+		for (T i : print) {
+			System.out.print(i + " ");
 		}
+		System.out.println();
 	}
 }

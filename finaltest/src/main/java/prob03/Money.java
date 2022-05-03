@@ -40,7 +40,8 @@ public class Money {
 	}
 
 	public boolean equals(Money money) {
-		if (money instanceof Money && this.amount == money.amount) {
+		// = money instanceof Money
+		if (money.getClass() == getClass() && this.amount == money.amount) {
 			return true;
 		} else {
 			return false;

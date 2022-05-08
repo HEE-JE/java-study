@@ -1,18 +1,6 @@
 package prob3;
 
 public class Sparrow extends Bird {
-	private String name;
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@Override
 	public void fly() {
 		System.out.println("참새(" + getName() + ")는 날아다닙니다.");

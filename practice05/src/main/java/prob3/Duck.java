@@ -1,18 +1,6 @@
 package prob3;
 
 public class Duck extends Bird {
-	private String name;
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@Override
 	public void fly() {
 		System.out.println("오리(" + getName() + ")는 날지 않습니다.");

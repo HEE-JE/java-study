@@ -6,7 +6,6 @@ public class CalcApp {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-
 		while (true) {
 			System.out.print("두 정수와 연산자를 입력하시오 >> ");
 			String expression = scanner.nextLine();

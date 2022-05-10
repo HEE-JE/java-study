@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ChatClientApp {
-	private static final String SERVER_IP = "192.168.10.22";
+	private static final String SERVER_IP = "127.0.0.1";
 	private static final int SERVER_PORT = 9999;
 
 	public static void main(String[] args) {
@@ -44,9 +44,9 @@ public class ChatClientApp {
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
 
 			// 4. join protocol 처리
-
-			// -----> "join\n"
-			// join:ok <----------
+			pw.println("join:" + name);
+			String line = br.readLine();
+			System.out.println(line);
 
 			new ChatWindow(name, socket).show();
 		} catch (IOException e) {

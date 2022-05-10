@@ -7,13 +7,19 @@ import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+
+import chat.ChatClient;
 
 public class ChatWindow {
 
@@ -23,6 +29,8 @@ public class ChatWindow {
 	private TextField textField;
 	private TextArea textArea;
 	private Socket socket;
+	BufferedReader br = null;
+	PrintWriter pw = null;
 
 	public ChatWindow(String name, Socket socket) {
 		frame = new Frame(name);
@@ -69,7 +77,6 @@ public class ChatWindow {
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				finish();
-				System.exit(0);
 			}
 		});
 		frame.setVisible(true);
@@ -78,20 +85,30 @@ public class ChatWindow {
 		/*
 		 * 2. IOStream (pipeline established)
 		 */
+		try {
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
 
-		/*
-		 * 3. Chat Client Thread 생성 및 실행
-		 */
+			/*
+			 * 3. Chat Client Thread 생성 및 실행
+			 */
+			new ChatClientThread().start();
+
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 	}
 
 	private void sendMessage() {
 		String message = textField.getText();
-		System.out.println("메세지 보냄 프로토콜 구현" + message);
+		pw.println("message:" + message);
 		textField.setText("");
 		textField.requestFocus();
-
-		// Chat Client Thread에서 서버로 부터 받은 메세지가 있다고 치고~~ (가짜 데이터)
-		updateTextArea("마이콜:" + message);
 	}
 
 	private void updateTextArea(String message) {
@@ -100,6 +117,7 @@ public class ChatWindow {
 	}
 
 	private void finish() {
+		pw.println("quit");
 		System.out.println("소켓 닫기 or 방나가기(quit) 프로토콜 구현");
 		System.exit(0);
 	}
@@ -108,7 +126,25 @@ public class ChatWindow {
 		@Override
 		public void run() {
 			while (true) {
-
+				try {
+					while (true) {
+						String data = br.readLine();
+						if (data == null) {
+							break;
+						}
+						updateTextArea(data);
+					}
+				} catch (IOException e) {
+					System.out.println("Error:" + e);
+				} finally {
+					try {
+						if (br != null) {
+							br.close();
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}

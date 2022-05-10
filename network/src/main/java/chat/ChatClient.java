@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ChatClient {
-	private static final String SERVER_IP = "192.168.10.22";
+	private static final String SERVER_IP = "127.0.0.1";
 	private static final int SERVER_PORT = 9999;
 
 	public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class ChatClient {
 				System.out.println("닉네임을 입력해주세요.");
 			}
 
-			// 6. ChatClientReceiveThread 시작
+			// 6. ChatClientThread 시작
 			new ChatClientThread(br).start();
 
 			// 7. 키보드 입력 처리
@@ -63,9 +63,17 @@ public class ChatClient {
 		} catch (IOException e) {
 			log("error:" + e);
 		} finally {
-			// 10. 자원정리
-			if (scanner != null) {
-				scanner.close();
+			{
+				try {
+					// 10. 자원정리
+					if (scanner != null) {
+						scanner.close();
+					}
+					if (socket != null && !socket.isClosed())
+						socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

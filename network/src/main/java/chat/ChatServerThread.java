@@ -73,8 +73,6 @@ public class ChatServerThread extends Thread {
 		// ack
 		PrintWriter printWriter = (PrintWriter) writer;
 		printWriter.println("정상적으로 입장되었습니다.");
-		printWriter.flush();
-
 	}
 
 	private void doMessage(String data) {
@@ -106,7 +104,6 @@ public class ChatServerThread extends Thread {
 			for (Writer writer : listWriters) {
 				PrintWriter printWriter = (PrintWriter) writer;
 				printWriter.println(data);
-				printWriter.flush();
 			}
 		}
 	}

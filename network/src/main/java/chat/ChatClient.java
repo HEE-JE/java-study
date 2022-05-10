@@ -37,7 +37,6 @@ public class ChatClient {
 				String nickname = scanner.nextLine();
 				if (!"".equals(nickname)) {
 					pw.println("join:" + nickname);
-					pw.flush();
 					break;
 				}
 				System.out.println("닉네임을 입력해주세요.");
@@ -56,11 +55,9 @@ public class ChatClient {
 				} else if ("quit".equals(input)) {
 					// 8. quit 프로토콜 처리
 					pw.println("quit");
-					pw.flush();
 				} else {
 					// 9. 메시지 처리
 					pw.println("message:" + input);
-					pw.flush();
 				}
 			}
 		} catch (IOException e) {

@@ -19,8 +19,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 
-import chat.ChatClient;
-
 public class ChatWindow {
 
 	private Frame frame;
@@ -28,9 +26,12 @@ public class ChatWindow {
 	private Button buttonSend;
 	private TextField textField;
 	private TextArea textArea;
+	private TextArea list;
 	private Socket socket;
 	BufferedReader br = null;
 	PrintWriter pw = null;
+	private boolean kickCheck = false;
+	private boolean changeCheck = false;
 
 	public ChatWindow(String name, Socket socket) {
 		frame = new Frame(name);
@@ -38,6 +39,7 @@ public class ChatWindow {
 		buttonSend = new Button("Send");
 		textField = new TextField();
 		textArea = new TextArea(30, 80);
+		list = new TextArea(30, 10);
 		this.socket = socket;
 	}
 
@@ -73,6 +75,10 @@ public class ChatWindow {
 		textArea.setEditable(false);
 		frame.add(BorderLayout.CENTER, textArea);
 
+		// List
+		list.setEditable(false);
+		frame.add(BorderLayout.EAST, list);
+
 		// Frame
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -94,19 +100,33 @@ public class ChatWindow {
 			 */
 			new ChatClientThread().start();
 
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
 
 	private void sendMessage() {
 		String message = textField.getText();
-		pw.println("message:" + message);
+		if ("quit".equals(message)) {
+			finish();
+		} else if ("change".equals(message)) {
+			pw.println("change");
+			changeCheck = true;
+		} else if (changeCheck) {
+			pw.println(message);
+			changeCheck = false;
+		} else if ("kick".equals(message)) {
+			pw.println("kick");
+			kickCheck = true;
+		} else if (kickCheck) {
+			pw.println(message);
+			kickCheck = false;
+		} else {
+			pw.println("message:" + message);
+		}
 		textField.setText("");
 		textField.requestFocus();
 	}
@@ -118,7 +138,6 @@ public class ChatWindow {
 
 	private void finish() {
 		pw.println("quit");
-		System.out.println("소켓 닫기 or 방나가기(quit) 프로토콜 구현");
 		System.exit(0);
 	}
 
@@ -135,7 +154,7 @@ public class ChatWindow {
 						updateTextArea(data);
 					}
 				} catch (IOException e) {
-					System.out.println("Error:" + e);
+					// Stream closed
 				} finally {
 					try {
 						if (br != null) {

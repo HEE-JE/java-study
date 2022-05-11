@@ -1,8 +1,6 @@
 package chat;
 
 import java.io.IOException;
-import java.io.Writer;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,21 +12,20 @@ public class ChatServer {
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
-		List<Writer> listWriters = new ArrayList<Writer>();
+		List<ChatUser> listUsers = new ArrayList<ChatUser>();
 
 		try {
 			// 1. 서버 소겟 생성
 			serverSocket = new ServerSocket();
 
 			// 2. 바인딩
-			String hostAddress = InetAddress.getLocalHost().getHostAddress();
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT));
-			log("연결 기다림 " + hostAddress + ":" + PORT);
+			log("PORT 번호 :" + PORT);
 
 			// 3. 요청 대기
 			while (true) {
 				Socket socket = serverSocket.accept();
-				new ChatServerThread(socket, listWriters).start();
+				new ChatServerThread(socket, listUsers).start();
 			}
 		} catch (IOException e) {
 			log("error:" + e);

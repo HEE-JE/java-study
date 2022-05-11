@@ -33,7 +33,7 @@ public class ChatClient {
 
 			// 5. join 프로토콜
 			while (true) {
-				System.out.print("닉네임>>");
+				System.out.print("닉네임을 입력하세요: ");
 				String nickname = scanner.nextLine();
 				if (!"".equals(nickname)) {
 					pw.println("join:" + nickname);
@@ -50,11 +50,20 @@ public class ChatClient {
 				System.out.print(">>");
 				String input = scanner.nextLine();
 
-				if ("".equals(input)) {
-					System.out.println("메세지를 입력해주세요.");
+				if ("change".equals(input)) {
+					// * change 프로토콜 처리
+					pw.println("change");
+					String nickName = scanner.nextLine();
+					pw.println(nickName);
+				} else if ("kick".equals(input)) {
+					// * kick 프로토콜 처리
+					pw.println("kick");
+					String nickName = scanner.nextLine();
+					pw.println(nickName);
 				} else if ("quit".equals(input)) {
 					// 8. quit 프로토콜 처리
 					pw.println("quit");
+					break;
 				} else {
 					// 9. 메시지 처리
 					pw.println("message:" + input);

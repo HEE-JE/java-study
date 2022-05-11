@@ -22,7 +22,7 @@ public class ChatClientThread extends Thread {
 				System.out.println(data);
 			}
 		} catch (IOException e) {
-			ChatClient.log("error:" + e);
+			// Socket closed
 		} finally {
 			try {
 				if (bufferedReader != null) {

@@ -18,6 +18,10 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+import chat.ChatUser;
 
 public class ChatWindow {
 
@@ -26,12 +30,13 @@ public class ChatWindow {
 	private Button buttonSend;
 	private TextField textField;
 	private TextArea textArea;
-	private TextArea list;
+	private TextArea textList;
 	private Socket socket;
 	BufferedReader br = null;
 	PrintWriter pw = null;
 	private boolean kickCheck = false;
 	private boolean changeCheck = false;
+	List<String> lists = new ArrayList<String>();
 
 	public ChatWindow(String name, Socket socket) {
 		frame = new Frame(name);
@@ -39,7 +44,7 @@ public class ChatWindow {
 		buttonSend = new Button("Send");
 		textField = new TextField();
 		textArea = new TextArea(30, 80);
-		list = new TextArea(30, 10);
+		textList = new TextArea(30, 10);
 		this.socket = socket;
 	}
 
@@ -76,8 +81,8 @@ public class ChatWindow {
 		frame.add(BorderLayout.CENTER, textArea);
 
 		// List
-		list.setEditable(false);
-		frame.add(BorderLayout.EAST, list);
+//		list.setEditable(false);
+		frame.add(BorderLayout.EAST, textList);
 
 		// Frame
 		frame.addWindowListener(new WindowAdapter() {
@@ -131,6 +136,14 @@ public class ChatWindow {
 		textField.requestFocus();
 	}
 
+	private void updateListArea(List<String> lists) {
+		textList.setText("<명단>\n");
+		for (String name : lists) {
+			textList.append(name);
+			textList.append("\n");
+		}
+	}
+
 	private void updateTextArea(String message) {
 		textArea.append(message);
 		textArea.append("\n");
@@ -144,27 +157,38 @@ public class ChatWindow {
 	private class ChatClientThread extends Thread {
 		@Override
 		public void run() {
-			while (true) {
-				try {
-					while (true) {
-						String data = br.readLine();
-						if (data == null) {
-							break;
+			try {
+				while (true) {
+					String data = br.readLine();
+					if (data == null) {
+						break;
+					}
+					if (data.charAt(0) == '`') {
+						data = data.substring(1, data.length());
+//						System.out.println(data);
+						String[] tokens = data.split("`");
+						for (int i = 0; i < tokens.length; i++) {
+//							System.out.println(tokens[i]);
+							lists.add(tokens[i]);
 						}
+						updateListArea(lists);
+						lists.clear();
+					} else {
 						updateTextArea(data);
 					}
-				} catch (IOException e) {
-					// Stream closed
-				} finally {
-					try {
-						if (br != null) {
-							br.close();
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
+				}
+			} catch (IOException e) {
+				// Stream closed
+			} finally {
+				try {
+					if (br != null) {
+						br.close();
 					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		}
+
 	}
 }

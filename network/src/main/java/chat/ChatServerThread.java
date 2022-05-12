@@ -95,28 +95,33 @@ public class ChatServerThread extends Thread {
 
 		// ack
 		user.getPrintWriter().println("정상적으로 입장되었습니다." + (user.isRole() ? "(반장)" : ""));
+		broadcastList();
 	}
 
 	private void doChange(String nickName, ChatUser user) {
-		user.setRole(false);
 		boolean check = false;
-		user.getPrintWriter().println("반장을 양도하셨습니다.");
-		for (ChatUser chatUser : listUsers) {
-			if (chatUser.getName().equals(nickName)) {
-				check = true;
-				chatUser.setRole(true);
-				chatUser.getPrintWriter().println("반장을 양도받으셨습니다.");
-				break;
+		if (nickName.equals(user.getName())) { // change시 반장 닉네임을 입력할 경우
+			user.getPrintWriter().println("반장입니다.");
+		} else {
+			for (ChatUser chatUser : listUsers) {
+				if (chatUser.getName().equals(nickName)) {
+					user.setRole(false);
+					user.getPrintWriter().println("반장을 양도하셨습니다.");
+					check = true;
+					chatUser.setRole(true);
+					chatUser.getPrintWriter().println("반장을 양도받으셨습니다.");
+					broadcastList();
+					break;
+				}
 			}
-		}
-		if (!check) {
-			user.getPrintWriter().println("유저가 없습니다.");
+			if (!check) {
+				user.getPrintWriter().println("유저가 없습니다.");
+			}
 		}
 	}
 
 	private void doKick(String nickName, ChatUser user) {
 		boolean check = false;
-
 		if (nickName.equals(user.getName())) { // kick시 반장 닉네임을 입력할 경우
 			user.getPrintWriter().println("quit를 이용해주세요.");
 		} else {
@@ -126,6 +131,7 @@ public class ChatServerThread extends Thread {
 					removeUser(chatUser);
 					String data = chatUser.getName() + "님이 강퇴되었습니다.";
 					broadcast(data);
+					broadcastList();
 					chatUser.getPrintWriter().println("강퇴되었습니다.");
 					chatUser.getPrintWriter().close();
 					break;
@@ -156,6 +162,7 @@ public class ChatServerThread extends Thread {
 
 		String data = user.getName() + "님이 퇴장하였습니다.";
 		broadcast(data);
+		broadcastList();
 	}
 
 	private void removeUser(ChatUser user) {
@@ -168,6 +175,22 @@ public class ChatServerThread extends Thread {
 	private void addUser(ChatUser user) {
 		synchronized (listUsers) {
 			listUsers.add(user);
+		}
+	}
+
+	private void broadcastList() {
+		synchronized (listUsers) {
+			for (ChatUser chatUser : listUsers) {
+				for (ChatUser name : listUsers) {
+					try {
+						ChatServerThread.sleep(1);
+					} catch (InterruptedException e) {
+
+					}
+					chatUser.getPrintWriter().print("`" + name.getName() + (name.isRole() ? "(반장)" : ""));
+				}
+				chatUser.getPrintWriter().println();
+			}
 		}
 	}
 

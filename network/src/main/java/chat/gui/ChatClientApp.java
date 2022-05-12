@@ -46,6 +46,7 @@ public class ChatClientApp {
 			System.out.println(line);
 
 			new ChatWindow(name, socket).show();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

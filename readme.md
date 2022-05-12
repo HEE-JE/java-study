@@ -23,3 +23,6 @@ Java Network 프로그래밍 수업 예제
 
 ### practice05
 자바 객체지향 프로그래밍 연습문제5
+
+### finaltest
+과목 정리 연습문제
